@@ -3,15 +3,15 @@ import Combine
 /*:
  ## 15 Managing errors
 
- Managing error is really important since everytime a publisher sends an error it stops streaming anymore events, so you might want to react accordingly.
+ Managing errors is really important since everytime a publisher sends an error it stops streaming any more events, so you might want to react accordingly.
 
- Fortunately combines comes with many operators to handle those errors.
+ Fortunately `Combine` comes with many operators to handle those errors.
 */
 let record = Record<Int, MyError>(output: [1, 2, 3], completion: .failure(MyError.fail))
 /*:
  ### 15.1 Catch
 
- Let's start with catch, it enables to react to an error and return a new publisher to replace the one that failed.
+ Let's start with `catch`, it enables to react to an error and return a new publisher to replace the one that failed.
  */
 let catched = record
     .catch { (error: MyError) -> Just<Int> in
@@ -29,7 +29,7 @@ let catched = record
 print("\n")
 /*:
  The replacing publisher benefits from the same operators applied after the catch.
- The good news is that since publisher have a `Failure` associated type we know what kind of error we are dealing with.
+ The good news is that since publishers have a `Failure` associated type we know what kind of error we are dealing with.
 
  > Since the replacing publisher also benefits from the next operators we have to provide a publisher that returns the same Output.
  */
@@ -43,14 +43,14 @@ print("\n")
 
  ### 15.2 TryCatch
 
- `TryCatch` does almost exactly the same as `Catch` the subttle but important difference is that `TyCatch` can throw an error in its closure.
+ `TryCatch` does almost exactly the same as `Catch` the subtle but important difference is that `TryCatch` can throw an error in its closure.
 
- - Callout(You brain):
+ - Callout(Your brain):
  Why not always use `TryCatch`, if you can move mountains you can move molehills.
 
- Well here again the problem comes from a limitation of the language : anything that conforms to error can be thrown and there is no language feature to limit what can be thrown in a given context. Which mean we cannot be sure of the type of Failure we will end up with. This means that using `tryCatch` will erase the `Failure` of a publisher.
+ Well here again the problem comes from a limitation of the language : anything that conforms to `Error` can be thrown and there is no language feature to limit what can be thrown in a given context. Which means we cannot be sure of the type of `Failure` we will end up with. This means that using `tryCatch` will erase the `Failure` of a publisher.
 
- > For the exact same reason `map` cannot throw error and if you want to throw one you should `tryMap`, this is true for every closure based operator. But keep in mind that throwing will erase the `Failure` type.
+ > For the exact same reason `map` cannot throw errors and if you want to throw one you should `tryMap`, this is true for every closure based operator. But keep in mind that throwing will erase the `Failure` type.
  */
 let tryCatched = record
     .tryCatch { (error: MyError) -> Just<Int> in
@@ -65,20 +65,20 @@ print("\n")
 /*:
  ### 15.3 Retry
 
- This one is self explanatory, when retry receives an error it recreate the "parent" publisher and tries again, limited to the number to trial you provides him.
+ This one is self explanatory, when retry receives an error it recreates the "parent" publisher and tries again, limited to the number of trials you provide him.
  */
 let retried = record
     .retry(2)
     .sinkPrint()
 print("\n")
 /*:
- It's easy to get confused here, the number you provide to retry is not the number of trials but the number of retrial. In the previous exemple the record is played 3 times and not 2.
+ It's easy to get confused here, the number you provide to retry is not the number of trials but the number of retrial. In the previous example the record is played 3 times and not 2.
 
  ### 15.4 AssertNoFailure
 
- Sometimes you might have a publiser that specifies a specific `Failure` type, but you are confident that no error will be sent. This is when `assertNoFailure` comes handy. It simply change your publisher `Failure` type to `Never`.
+ Sometimes you might have a publiser that specifies a specific `Failure` type, but you are confident that no error will be sent. This is when `assertNoFailure` comes handy. It simply changes your publisher's `Failure` type to `Never`.
 
- Of course if you were wrongly thinking no error can be sent you are exposing your self to a crash.
+ Of course if you were wrongly thinking no error can be sent you are exposing yourself to a crash.
  */
 let assertNoFailure = (1...3).publisher
     .setFailureType(to: MyError.self)
@@ -99,7 +99,7 @@ let replacedError = record
 print("\n")
 
 /*:
- Now we are able to handle error sent by our publisher, let's look into debugging. Because we have tools to create some fairly complicated publisher and that always comes with fairly complicated bugs. Not to mention working with data streams can be hard to grasp but even harder to debug without the right tools.
+ Now we are able to handle errors sent by our publishers, let's look into debugging. Because we have tools to create some fairly complicated publishers and that always comes with fairly complicated bugs. Not to mention working with data streams can be hard to grasp but even harder to debug without the right tools.
  */
 
 //: [Next](@next)

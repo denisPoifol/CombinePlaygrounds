@@ -5,7 +5,7 @@ import Combine
 
  ## 10 Multicast
 
- Let's say we have some heavy tasks we want to complete, we are going to represent it by to different functions mutating a value.
+ Let's say we have some heavy tasks we want to complete, we are going to represent it by two different functions mutating a value.
  */
 var operationAcheivedCount = 0
 func reset() {
@@ -43,11 +43,11 @@ Publishers.Zip(
     .sinkPrint()
 print("\n")
 /*:
- This prints begin twice which means something is wrong and we are actualy doing this :
+ This prints `begin` twice which means something is wrong and we are actualy doing this :
  
  ![wrong workflow diagram](WrongWorkflow.png)
 
- In this use case we want to be using `share`
+ In this use case we want to be using `multicast`
  */
 // now this means when an event is sent from printBegin it will be sent by multicast.
 let  multicast = deferredBegin
@@ -59,11 +59,11 @@ Publishers.Zip(
 )
     .then(end)
     .sinkPrint()
-// using a multicast no event is processed until connect is called.
+// when we are using a multicast, no event is sent until connect is called.
 multicast.connect()
 print("\n")
 /*:
- Calling connect is a way to make sure everything that should be listening to the multicast is already set up.
+ Calling `connect` is a way to make sure everything that should be listening to the multicast is already set up.
  If for some reason you do not want to wait for everything to be connected you can call `autoconnect` which means a call to `connect` is made as soon as the multicast receives a subscriber.
 
  Which is not our case here :
@@ -80,10 +80,10 @@ Publishers.Zip(
     .sinkPrint()
 print("\n")
 /*:
- > `Zip` waits for one value from each publisher to publish a value of its own, but it immediately publish a completion when receiving one from any of its publishers.
+ > `Zip` waits for one value from each publisher to publish a value of its own, but it immediately publishes a completion when receiving one from any of its publishers.
 
  Now this is not over, we still have to understand how this subject is working.
- Let's say give it a CurrentValueSubject instead how will it impact our publisher?
+ Let's say we give it a CurrentValueSubject instead how will it impact our publisher?
  */
 reset()
 let  currentValueMulticast = deferredBegin
@@ -102,7 +102,11 @@ print("\n")
  But this does not include the event sent when `deferredBegin` is executed, which trigger a new event from the multicast.
 
  Now there is also a way to create a multicast where all subscribers receive a different subject, but we will ignore this one 🙈.
- We might get back to it once we understand the inside and out of the `Subscriber`protocol.
+ We might get back to it once we understand the inside and out of the `Subscriber` protocol.
+
+ > It is worth mentionning the `share` operator, which is similar to multicast, could be used in our example.
+
+ `share` returns a class wrapping of our publisher to enable attaching multiple subscribers to it.
 
  But let's look at this `connect` functionality, this seems like something that could be usefull not only to multicast.
  */

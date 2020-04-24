@@ -46,11 +46,11 @@ myValueWrapper.$value
 myValueWrapper.value = 13
 print("\n")
 /*:
- The is definitely not the exact implementation from **Combine** but it works as expected.
+ This is definitely not the exact implementation from **Combine** but it works as expected.
  If we wanted to create a completely identical implementation we would have to recreate a custom publisher, and fix the initialization.
 
- Well at least it give us a better idea of how @Published works under the hood.
+ Well at least it gives us a better idea of how @Published works under the hood.
 
- Let's keep exploring what is provided by **Combine** we would not want too missed out on a hidden gem.
+ Let's keep exploring what is provided by **Combine** we would not want to miss out on a hidden gem. 💎
 */
 //: [Next](@next)

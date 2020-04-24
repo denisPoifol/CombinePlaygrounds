@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='6.0' target-platform='ios' display-mode='rendered'>
+<playground version='6.0' target-platform='ios' display-mode='raw'>
     <pages>
         <page name='Introduction'/>
         <page name='DeclarativePrograming'/>
@@ -12,7 +12,7 @@
         <page name='Subjects'/>
         <page name='Published'/>
         <page name='ConveniencePublishers'/>
-        <page name='Futures'/>
+        <page name='Future'/>
         <page name='SideEffects'/>
         <page name='Multicast'/>
         <page name='ConnectablePublisher'/>

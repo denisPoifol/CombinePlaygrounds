@@ -2,8 +2,8 @@
  [Previous](@previous)
 ## 1 Declarative programming
 
- Declarative progragming is a way to express code that focus on the logic of a computation rather on the detail control flow, by opposition to imperative programming.
- Let's see an example of the two, we want to compute the sum of all pair numbers in an array :
+ Declarative programming is a way to express code that focus on the logic of a computation rather than on the details of the control flow, by opposition to imperative programming.
+ Let's see an example of the two. We want to compute the sum of all pair numbers in an array :
 */
 func imperativeSum(array: [Int]) -> Int {
     var sum: Int = 0

@@ -1,7 +1,7 @@
 import Combine
 /*: [Previous](@previous)
 
- We have gone through `Just` and publisher initialized using a `Sequence` which are good to begin with but let's look at something a bit different and introduce a different concept.
+ We have gone through `Just` and publisher initialization using a `Sequence` which is good to begin with but let's look at something a bit different and introduce a new concept.
 
  ## 5 Subject
 
@@ -13,7 +13,7 @@ import Combine
  Great, what are the built-in subjects in **Combine** ?
 
  ### 5.1 PassThroughSubject
- `PassThroughSubject` is the simplest subject you can imagine, it only publish values you send through it :
+ `PassThroughSubject` is the simplest subject you can imagine, it only publishes values you send through it :
  */
 var anyCancellables: [AnyCancellable] = []
 let passThroughSubject = PassthroughSubject<Int, Error>()
@@ -29,13 +29,13 @@ passThroughSubject.send(5)
 passThroughSubject.send(completion: .finished)
 print("\n")
 /*:
- We can see that contrary to `Just` and `Publishers.Sequence` our subject does not repeat passed elements to a new subscruber. And now cancelling a subscriber can make sens since we are able with this subscriber to send values when we want and not only directly after a subscriber attached to the publisher.
+ We can see that contrary to `Just` and `Publishers.Sequence` our subject does not repeat passed elements to a new subscriber. And now cancelling a subscriber makes sense since we are able with this subscriber to send values when we want and not only directly after a subscriber is attached to the publisher.
 
- With this subscriber we only receive the values sent while our subscriber is attached. Now we start to see the processing of values over time. What's cool about `Subject` is that it gives an easy transition to programming with streams, since it publish event imperatively.
+ With this subscriber we only receive the values sent while our subscriber is attached. Now we start to see the processing of values over time. What's cool about `Subject` is that it gives a smooth transition to programming with streams, since it publishes events imperatively.
 
 
  ### 5.2 CurrentValueSubject
- `CurrentValueSubject` do everything a passthrough subject does but it also keep track of the last **event** sent. That way when we subscribe to this subject we receive the value published by it.
+ `CurrentValueSubject` does everything a passthrough subject does but it also keeps track of the last value sent. That way when we subscribe to this subject we receive the last value published by it.
  */
 let currentValueSubject = CurrentValueSubject<Int, Never>(1)
 currentValueSubject.send(1)
@@ -53,7 +53,7 @@ currentValueSubject
     .store(in: &anyCancellables)
 print("\n")
 /*:
- We are slowly getting to know more and more publisher and how they work, let's keep going and learn about one you probably already heard about `@published`.
+ We are slowly getting to know more and more about publishers and how they work, let's keep going and learn about one you probably already heard about `@published`.
  
  [Next](@next)
  */

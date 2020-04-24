@@ -1,6 +1,6 @@
 # CombinePlaygrounds
 
-Here is playground that should read as book about the Combine framework, but with the added benefit that it is a playground.
+Here is a playground that should read as book about the Combine framework, but with the added benefit that it is a playground and you can get your hands into the code if you want to.
 
 It should enable you to discover Combine by playing with it and going through simple exemples.
 
