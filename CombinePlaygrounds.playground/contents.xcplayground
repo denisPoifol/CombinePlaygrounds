@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='rendered'>
+    <pages>
+        <page name='Introduction'/>
+        <page name='DeclarativePrograming'/>
+        <page name='ProcessingValuesOverTime'/>
+        <page name='CoreConcepts'/>
+        <page name='FirstGlance'/>
+        <page name='Sequences'/>
+        <page name='TypeErasure'/>
+        <page name='AnyCancellable'/>
+        <page name='Subjects'/>
+        <page name='Published'/>
+        <page name='ConveniencePublishers'/>
+        <page name='Futures'/>
+        <page name='SideEffects'/>
+        <page name='Multicast'/>
+        <page name='ConnectablePublisher'/>
+        <page name='Scheduler'/>
+        <page name='TimeOperators'/>
+        <page name='CombiningPublishers'/>
+        <page name='ManagingErrors'/>
+        <page name='Debuging'/>
+    </pages>
+</playground>
