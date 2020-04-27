@@ -40,6 +40,7 @@
     - [14. Combining publishers](CombiningPublishers)
     - [15. Managing errors](ManagingErrors)
     - [16. Debuging](Debuging)
+    - [17. Holding on to your subscribers](HoldingSubscriber)
 
  [Next](@next)
 */
