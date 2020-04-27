@@ -41,6 +41,8 @@
     - [15. Managing errors](ManagingErrors)
     - [16. Debuging](Debuging)
     - [17. Holding on to your subscribers](HoldingSubscriber)
+ - III Combine in depth
+    - [1. Implementing Sink](MySink)
 
  [Next](@next)
 */
