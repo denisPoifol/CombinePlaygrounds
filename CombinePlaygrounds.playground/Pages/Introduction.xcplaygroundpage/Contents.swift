@@ -43,6 +43,9 @@
     - [17. Holding on to your subscribers](HoldingSubscriber)
  - III Combine in depth
     - [1. Implementing Sink](MySink)
+    - [2. Subscribers.Demand](SubscribersDemand)
+ - IV Annex
+    - [1. Native subject crash](NativeSubjectsCrash)
 
  [Next](@next)
 */
