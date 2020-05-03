@@ -25,6 +25,7 @@
         <page name='MySink'/>
         <page name='SubscribersDemand'/>
         <page name='BackPressure'/>
+        <page name='Buffers'/>
         <page name='NativeSubjectsCrash'/>
     </pages>
 </playground>

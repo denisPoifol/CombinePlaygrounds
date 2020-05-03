@@ -45,6 +45,7 @@
     - [1. Implementing Sink](MySink)
     - [2. Subscribers.Demand](SubscribersDemand)
     - [3. Back pressure](BackPressure)
+    - [4. Buffers](Buffers)
  - IV Annex
     - [1. Native subject crash](NativeSubjectsCrash)
 
