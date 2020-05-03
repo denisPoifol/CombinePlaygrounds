@@ -1,2 +1,3 @@
 .DS_Store
 CombinePlaygrounds.playground/playground.xcworkspace/xcuserdata
+*.xctimeline
