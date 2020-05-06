@@ -13,7 +13,7 @@ let valueWrapper = ValueWrapper()
 let cancellable = valueWrapper.$value
     .sinkPrint()
 valueWrapper.value = 13
-print("\n")
+Logger.shared.returnLogs()
 /*:
 🤔 This looks a lot like what we just saw with `CurrentValueSubject`. Let's try to reimplement it!
  */
@@ -44,7 +44,7 @@ let myValueWrapper = MyValueWrapper()
 myValueWrapper.$value
     .sinkPrint()
 myValueWrapper.value = 13
-print("\n")
+Logger.shared.returnLogs()
 /*:
  This is definitely not the exact implementation from **Combine** but it works as expected.
  If we wanted to create a completely identical implementation we would have to recreate a custom publisher, and fix the initialization.

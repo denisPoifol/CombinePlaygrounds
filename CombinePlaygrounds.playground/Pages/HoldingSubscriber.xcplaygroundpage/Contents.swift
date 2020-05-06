@@ -14,7 +14,7 @@ import Foundation
 Timer.publish(every: 1, on: .current, in: .default)
     .autoconnect()
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  🤔 "receive cancel", this is really weird I especially did not want to send a cancel.
 
@@ -30,7 +30,7 @@ let cancellable = Timer.publish(every: 1, on: .current, in: .default)
     .autoconnect()
     .sinkPrint()
 cancellable.cancel()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  - Callout(Your brain):
  How come most of our previous tests, that did not keep a reference on the `AnyCancellable` value, did not fail systematically before?
@@ -40,7 +40,7 @@ print("\n")
  In some cases the publisher completes even before sink returns its value.
  This is true for publishers returning a stored result such as `Just`, `Fail`, `Publishers.Sequence`, `Record` and probably more.
 
- In some other cases, the fact that the subscriber is not deallocated right away because the garbage collector needs to be triggered, gives just enough time for our tests to complete. This can also be seen in the previous examples because the `print("\n")` is executed before the publisher notifies receiving `cancel` (this actually depends upon which line you decide to run the code).
+ In some other cases, the fact that the subscriber is not deallocated right away because the garbage collector needs to be triggered, gives just enough time for our tests to complete. This can also be seen in the previous examples because the `Logger.shared.returnLogs` is executed before the publisher notifies receiving `cancel` (this actually depends upon which line you decide to run the code).
  */
 let subject = PassthroughSubject<Int, MyError>()
 subject.sinkPrint()
@@ -50,7 +50,7 @@ autoreleasepool {
     _ = subject.sinkPrint()
 }
 subject.send(1)
-print("\n")
+Logger.shared.returnLogs()
 /*:
  The auto releasepool here clearly shows us that the subscriber needs to be stored if we want to be sure to receive any events.
 

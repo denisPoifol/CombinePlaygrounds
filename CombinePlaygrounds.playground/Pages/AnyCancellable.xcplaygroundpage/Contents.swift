@@ -15,6 +15,7 @@ var cancellables: Set<AnyCancellable> = []
 (1...10).publisher
     .sinkPrint()
     .store(in: &cancellables)
+Logger.shared.returnLogs()
 /*:
  Now we are able to cancel the subscription of our sink (even though in this case our publisher will send a completion before we even have the opportunity to cancel the subscription). Actually all of the publishers we have created until now, complete their data stream before even returning the `AnyCancellable`.
  >Calling `store(in:)` on the returned cancellable, enables to keep our declarative flow.

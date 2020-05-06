@@ -13,9 +13,9 @@ import Foundation
 let connectableJust = Just(5)
     .makeConnectable()
 connectableJust.sinkPrint()
-print("connecting")
+print("connecting", to: &Logger.shared)
 connectableJust.connect()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  `ConnectablePublisher` also enables to use `autoConnect` which remove the connectable aspect of the publisher, this is usefull if you don't need it and want to keep the code declarative.
 
@@ -32,6 +32,7 @@ Timer.publish(every: 1, on: .current, in: RunLoop.Mode.common)
     }
     .sinkPrint()
     .store(in: &cancellables)
+Logger.shared.returnLogs()
 /*:
 >`ConnectablePublisher` being a protocol means we could conform to it when we create our custom publishers. But that is something for later, we still have so much to learn before creating publishers of our own.
 

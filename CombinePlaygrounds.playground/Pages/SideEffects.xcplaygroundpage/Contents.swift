@@ -28,7 +28,7 @@ func incrementCount() {
  Let's consider the following.
  */
 func printCounter() {
-    Swift.print("counter", counter)
+    Swift.print("counter: \(counter)", to: &Logger.shared)
 }
 
 func resetCounter() {
@@ -42,6 +42,7 @@ let reset = Future(resetCounter)
 increment
     .then(resetCounter)
     .then(printCounter)
+Logger.shared.returnLogs()
 /*:
  😱 what happened here? This does not make any sense!
 

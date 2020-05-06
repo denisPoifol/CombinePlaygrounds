@@ -27,7 +27,7 @@ passThroughSubject.send(4)
 anyCancellables.forEach { $0.cancel() }
 passThroughSubject.send(5)
 passThroughSubject.send(completion: .finished)
-print("\n")
+Logger.shared.returnLogs()
 /*:
  We can see that contrary to `Just` and `Publishers.Sequence` our subject does not repeat passed elements to a new subscriber. And now cancelling a subscriber makes sense since we are able with this subscriber to send values when we want and not only directly after a subscriber is attached to the publisher.
 
@@ -51,7 +51,7 @@ currentValueSubject.send(completion: .finished)
 currentValueSubject
     .sinkPrint()
     .store(in: &anyCancellables)
-print("\n")
+Logger.shared.returnLogs()
 /*:
  We are slowly getting to know more and more about publishers and how they work, let's keep going and learn about one you probably already heard about `@published`.
  

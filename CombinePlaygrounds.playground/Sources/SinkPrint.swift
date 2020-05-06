@@ -3,7 +3,7 @@ import Combine
 
 public extension Publisher {
     func sinkPrint() -> AnyCancellable {
-        print()
+        print(to: Logger.shared)
         .sink(receiveCompletion: { _ in }) { _ in }
     }
 }

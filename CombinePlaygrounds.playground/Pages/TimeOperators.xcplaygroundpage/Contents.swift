@@ -42,7 +42,7 @@ let mesureInterval = intPublisher
     .sinkPrint()
 // Run until here to see mesureInterval
 mesureInterval.cancel()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ### 13.2 debounce
  */
@@ -51,7 +51,7 @@ let debounced = intPublisher
     .sinkPrint()
 // Run until here to see debounced
 debounced.cancel()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ### 13.3 throttle
  */
@@ -60,14 +60,14 @@ let throttled1 = intPublisher
     .sinkPrint()
 // Run until here to see throttled1
 throttled1.cancel()
-print("\n")
+Logger.shared.returnLogs()
 
 let throttled2 = intPublisher
     .throttle(for: .seconds(0.5), scheduler: DispatchQueue.main, latest: false)
     .sinkPrint()
 // Run until here to see throttled2
 throttled2.cancel()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ### 13.4 delay
 
@@ -79,14 +79,14 @@ let dispatchQueueDelayed = intPublisher
     .sinkPrint()
 // Run until here to see dispatchQueueDelayed
 dispatchQueueDelayed.cancel()
-print("\n")
+Logger.shared.returnLogs()
 
 let runloopDelayed = intPublisher
     .delay(for: .seconds(0.5), tolerance: .nanoseconds(10), scheduler: RunLoop.current)
     .sinkPrint()
 // Run until here to see runloopDelayed
 runloopDelayed.cancel()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ### 13.5 timeOut
 
@@ -97,7 +97,7 @@ let timeOut = intPublisher
     .sinkPrint()
 // Run until here to see timeOut
 runloopDelayed.cancel()
-print("\n")
+Logger.shared.returnLogs()
 
 let timeOutWithCustomError = intPublisher
     .mapError { (_: Never) -> MyError in MyError.fail }
@@ -105,7 +105,7 @@ let timeOutWithCustomError = intPublisher
     .sinkPrint()
 // Run until here to see timeOut
 runloopDelayed.cancel()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  You probably noticed that I had to create a pretty strange publisher for us to be able to test and play with our time operators. Actually not that strange since there is only one thing we did not review yet to known all of the feature used. `Merge3` is a publisher used to **Combine** multiple publishers, we will see how it works (and more) in the next chapter.
  */

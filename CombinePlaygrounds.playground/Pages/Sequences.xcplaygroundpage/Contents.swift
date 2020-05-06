@@ -11,14 +11,15 @@ import Combine
 let array = [1, 2, 3, 4, 5]
 array.publisher
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 (1...10).publisher
     .sinkPrint()
+Logger.shared.returnLogs()
 //: I have to say this reminds me of `forEach(_:)`, I'll be damned if there is not a `map(_:)` waiting around the corner! 🕵️‍♂️
 array.publisher
     .map { $0 * 2 }
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  Here it is! And it makes sense too.
 
@@ -41,7 +42,7 @@ let publisher = array.publisher
     .append(array)
 publisher.sinkPrint()
 type(of: publisher)
-print("\n")
+Logger.shared.returnLogs()
 /*:
  This is even hinted to us by the type of our publisher, while we apply Sequence functions we have a `Publishers.Sequence<Array<Int>, Never>`.
  >Under the hood Combine is probably lazily applying function to the sequence to finally turn it into a publisher, in order to reduce the overhead.
@@ -50,8 +51,9 @@ print("\n")
  */
 let aPublisher = array.publisher
     .merge(with: array.publisher)
-print(type(of: aPublisher))
+print(type(of: aPublisher), to: &Logger.shared)
 let bPublisher = aPublisher
     .map { $0 * 2 }
-print(type(of: bPublisher))
+print(type(of: bPublisher), to: &Logger.shared)
+Logger.shared.returnLogs()
 //: [Next](@next)

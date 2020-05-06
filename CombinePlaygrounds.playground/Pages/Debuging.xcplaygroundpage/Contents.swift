@@ -34,7 +34,7 @@ let breakPoint = (1...5).publisher
 // the previous closures have to be commented to execute any of the following code examples
     )
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ### 16.2 breakpointOnError
 
@@ -48,7 +48,7 @@ let breakPointOnError = (1...5).publisher
 //    .breakpointOnError()
 // comment the previous operator to be able to run any of the following code examples
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  16.3 HandleEvents
 
@@ -63,13 +63,13 @@ print("\n")
  */
 let handleEvents = (1...5).publisher
     .handleEvents(
-        receiveSubscription: { print($0) },
-        receiveOutput: { print($0) },
-        receiveCompletion: { print($0) },
-        receiveCancel: { print("Cancel") },
-        receiveRequest: { print($0) }
+        receiveSubscription: { print($0, to: &Logger.shared) },
+        receiveOutput: { print($0, to: &Logger.shared) },
+        receiveCompletion: { print($0, to: &Logger.shared) },
+        receiveCancel: { print("Cancel", to: &Logger.shared) },
+        receiveRequest: { print($0, to: &Logger.shared) }
     )
     .sink { _ in }
 handleEvents.cancel()
-
+Logger.shared.returnLogs()
 //: [Next](@next)

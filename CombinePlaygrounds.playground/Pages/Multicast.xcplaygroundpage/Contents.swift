@@ -12,20 +12,20 @@ func reset() {
     operationAcheivedCount = 0
 }
 func begin() {
-    print("begin")
+    print("begin", to: &Logger.shared)
     reset()
 }
 func performFirstOperation() {
-    print("first")
+    print("first", to: &Logger.shared)
     operationAcheivedCount += 1
 }
 func performSecondOperation() {
-    print("second")
+    print("second", to: &Logger.shared)
     operationAcheivedCount += 1
 }
 
 func end() {
-    print("end", operationAcheivedCount)
+    print("end \(operationAcheivedCount)", to: &Logger.shared)
     reset()
 }
 /*:
@@ -41,7 +41,7 @@ Publishers.Zip(
 )
     .then(end)
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  This prints `begin` twice which means something is wrong and we are actualy doing this :
  
@@ -61,7 +61,7 @@ Publishers.Zip(
     .sinkPrint()
 // when we are using a multicast, no event is sent until connect is called.
 multicast.connect()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  Calling `connect` is a way to make sure everything that should be listening to the multicast is already set up.
  If for some reason you do not want to wait for everything to be connected you can call `autoconnect` which means a call to `connect` is made as soon as the multicast receives a subscriber.
@@ -78,7 +78,7 @@ Publishers.Zip(
 )
     .then(end)
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  > `Zip` waits for one value from each publisher to publish a value of its own, but it immediately publishes a completion when receiving one from any of its publishers.
 
@@ -95,7 +95,7 @@ Publishers.Zip(
     .then(end)
     .sinkPrint()
 currentValueMulticast.connect()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  Using a CurrentValueSubject means there is a buffer for the last event and it must have an initial value, here we give it an instance of `Void`.
  This means when connecting using `then` we will immediatly receive a `Void` event which will trigger the first and second operation and once both completed the end.

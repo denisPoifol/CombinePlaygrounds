@@ -26,7 +26,7 @@ let catched = record
     }
     .append(7)
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  The replacing publisher benefits from the same operators applied after the catch.
  The good news is that since publishers have a `Failure` associated type we know what kind of error we are dealing with.
@@ -36,8 +36,8 @@ print("\n")
 let catched1 = record
     .catch { _ in Just(4) }
     .eraseToAnyPublisher()
-print(type(of: catched1))
-print("\n")
+print(type(of: catched1), to: &Logger.shared)
+Logger.shared.returnLogs()
 /*:
  We also notice that the publisher returned by `catch` do not need to match the `Failure` type of the calling publisher. Indeed whatever error the publisher produces is never going to get passed our catch, so the next operator should not expect and error from the "parent" publisher. But since catch returns a different publisher if an error is sent, then that new publisher could himself in time produce an error but that error is free of any constraint.
 
@@ -59,8 +59,8 @@ let tryCatched = record
         }
         return Just(6)
     }
-print(type(of: tryCatched.eraseToAnyPublisher()))
-print("\n")
+print(type(of: tryCatched.eraseToAnyPublisher()), to: &Logger.shared)
+Logger.shared.returnLogs()
 
 /*:
  ### 15.3 Retry
@@ -70,7 +70,7 @@ print("\n")
 let retried = record
     .retry(2)
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  It's easy to get confused here, the number you provide to retry is not the number of trials but the number of retrial. In the previous example the record is played 3 times and not 2.
 
@@ -83,8 +83,8 @@ print("\n")
 let assertNoFailure = (1...3).publisher
     .setFailureType(to: MyError.self)
     .assertNoFailure()
-print(type(of: assertNoFailure.eraseToAnyPublisher()))
-print("\n")
+print(type(of: assertNoFailure.eraseToAnyPublisher()), to: &Logger.shared)
+Logger.shared.returnLogs()
 
 /*:
  ### 15.5 ReplacingError
@@ -96,7 +96,7 @@ print("\n")
 let replacedError = record
     .replaceError(with: -1)
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 
 /*:
  Now we are able to handle errors sent by our publishers, let's look into debugging. Because we have tools to create some fairly complicated publishers and that always comes with fairly complicated bugs. Not to mention working with data streams can be hard to grasp but even harder to debug without the right tools.

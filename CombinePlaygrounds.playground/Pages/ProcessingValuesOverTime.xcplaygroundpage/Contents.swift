@@ -12,13 +12,13 @@
  */
 func doSomething(completion: () -> Void) {
     // Some code performing an asynchronous task
-    print("doing something")
+    print("doing something", to: &Logger.shared)
     completion()
 }
 
 func doSomethingElse(completion: () -> Void) {
     // Some code performing an asynchronous task
-    print("doing something else")
+    print("doing something else", to: &Logger.shared)
     completion()
 }
 /*:
@@ -28,11 +28,11 @@ doSomething {
     doSomething {
         doSomethingElse {
             // ect...
-            print("done")
-            print("\n")
+            print("done", to: &Logger.shared)
         }
     }
 }
+Logger.shared.returnLogs()
 /*:
  This well known issue is called callback hell.
 
@@ -46,7 +46,7 @@ doSomething {
 
  func performOperation(delegate: MyDelegate) {
      // Some code to perform an asynchronous operation
-    print("performOperation(delegate:)")
+    print("performOperation(delegate:)", to: &Logger.shared)
     delegate.operationDidComplete()
 }
 /*:
@@ -62,7 +62,7 @@ protocol DelegateForAnotherTask {
 
 func performMyOtherTask(delegate: DelegateForAnotherTask) {
     // Some code to perform an asynchronous operation
-    print("performMyOtherTask(delegate:)")
+    print("performMyOtherTask(delegate:)", to: &Logger.shared)
     delegate.myTaskDidComplete()
 }
 //: The following struct on `execute()` will call `performOperation(delegate:)` and then on its completion call `performMyOtherTask(delegate:)` finally to print "Both tasks completed"
@@ -81,12 +81,12 @@ struct MyChainOfOperation: MyDelegate, DelegateForAnotherTask {
     // MARK: - DelegateForAnotherTask
 
     func myTaskDidComplete() {
-        print("Both tasks completed")
-        print("\n")
+        print("Both tasks completed", to: &Logger.shared)
     }
 }
 
 MyChainOfOperation().execute()
+Logger.shared.returnLogs()
 /*:
  We are not facing the callback hell issue, but our code is still hard to understand and maintain : we need to chase through callsites to find out what happened after each operation.
 

@@ -44,7 +44,7 @@ publisherB.send(2)
 publisherA.send(completion: .finished)
 publisherB.send(3)
 publisherB.send(completion: .finished)
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ![Merge diagram ending with a completion](MergeDiagramComplete.png)
 
@@ -64,7 +64,7 @@ publisherA.send(3)
 publisherB.send(2)
 publisherA.send(completion: .failure(.fail))
 publisherB.send(3)
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ![Merge diagram ending with a failure](MergeDiagramError.png)
 
@@ -126,7 +126,7 @@ publisherA.send(2)
 publisherB.send(2)
 publisherA.send(completion: .finished)
 publisherB.send(3)
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ![Zip diagram complete](ZipDiagramComplete.png)
 
@@ -145,7 +145,7 @@ publisherB.send(2)
 publisherB.send(2)
 publisherB.send(completion: .finished)
 publisherA.send(completion: .failure(.fail))
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ![Zip diagram complete](ZipDiagramError.png)
 
@@ -179,7 +179,7 @@ publisherB.send(3)
 publisherB.send(completion: .finished)
 publisherA.send(3)
 publisherA.send(completion: .failure(.fail))
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ![Combine latest diagram](CombineLatestDiagram.png)
 
@@ -216,7 +216,7 @@ publisherB.send(completion: .finished)
 publisherOfPublisher.send(publisherA.eraseToAnyPublisher())
 publisherA.send(4)
 publisherA.send(completion: .failure(.fail))
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ![Switch to latest when current publisher sends an error diagram](SwitchToLatestDiagramCurrentPublisherError.png)
 
@@ -243,7 +243,7 @@ publisherB.send(2)
 publisherB.send(completion: .finished)
 publisherA.send(completion: .failure(.fail))
 publisherOfPublisher.send(publisherA.eraseToAnyPublisher())
-print("\n")
+Logger.shared.returnLogs()
 
 /*:
  ![Switch to latest when current publisher already sent an error diagram](SwitchToLatestDiagramCurrentPublisherHasPassedError.png)
@@ -266,7 +266,7 @@ publisherA.send(3)
 publisherB.send(2)
 publisherB.send(completion: .finished)
 publisherOfPublisher.send(completion: .failure(.fail))
-print("\n")
+Logger.shared.returnLogs()
 /*:
  ![](SwitchToLatestDiagramPublisherOfPublisherError.png)
 

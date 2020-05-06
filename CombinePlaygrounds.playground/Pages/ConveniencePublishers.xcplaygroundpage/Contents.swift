@@ -15,7 +15,7 @@ import Combine
 let fail = Fail(outputType: Int.self, failure: MyError.fail)
 fail.sinkPrint()
 fail.sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  Once again here the stream is repeated for each subscriber that cares to listen to it.
 
@@ -26,7 +26,7 @@ print("\n")
 let empty = Empty(completeImmediately: true, outputType: Int.self, failureType: Never.self)
 empty.sinkPrint()
 empty.sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 
 /*:
  Once again here if we decide to send a completion then it will be sent to each of the subscribers.
@@ -43,7 +43,7 @@ let record2 = Record<Int, MyError> { recording in
 }
 record2.sinkPrint()
 record2.sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  Either way, like all the other publishers storing their events, it streams all these events to the subscriber once it subscribes.
 

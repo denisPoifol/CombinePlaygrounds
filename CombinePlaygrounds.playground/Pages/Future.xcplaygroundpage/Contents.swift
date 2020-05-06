@@ -11,7 +11,7 @@ let future = Future<Int, MyError> { promise in
 }
 future.sinkPrint()
 future.sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  Remember [when we were trying to chain tasks](ProcessingValuesOverTime), well this is it!
 
@@ -19,10 +19,10 @@ print("\n")
  */
 func someOperation() {
     sleep(1)
-    print("SomeOperation")
+    print("SomeOperation", to: &Logger.shared)
 }
 func someOtherOperation() {
-    print("SomeOtherOperation")
+    print("SomeOtherOperation", to: &Logger.shared)
 }
 Future<Void, Never> {
     someOperation()
@@ -30,7 +30,7 @@ Future<Void, Never> {
 }.map { _ in
     someOtherOperation()
 }.sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  There is a couple of things here that still feels off : for starters `$0(.success(()))` maybe it's just me but I cringe a little bit at the sight of that `(())` 😬
  So I am going to create an extension for that.
@@ -52,7 +52,7 @@ extension Result where Success == Void {
  Combine do have that magic function that is going to solve our problems, remember when we said publishers behave like sequences and benefit from many common function, well it's time to go and find the zip operator.
  */
 func aThirdOperation() {
-    print("aThirdOperation")
+    print("aThirdOperation", to: &Logger.shared)
 }
 
 Publishers.Zip(
@@ -67,7 +67,7 @@ Publishers.Zip(
 ).map { _ in
     aThirdOperation()
 }.sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  As we can see our third operation is only executed once both operation finish first.
 
@@ -83,7 +83,7 @@ Future<Void, Never> {
 ).map { _ in
     aThirdOperation()
 }.sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  But I have to say I dont think this reads well especially since our `Future` wrapping `someOtherOperation` is not a oneliner.
  Let's see if we can tweak this into something that feels a bit more natural.
@@ -101,7 +101,7 @@ Future<Void, Never> {
 .map { _ in
     aThirdOperation()
 }.sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 //: This reads a bit better but I am convinced we can do even better!
 extension Future where Failure == Never {
     convenience init(_ guarantee: @escaping () -> Output) {
@@ -124,7 +124,7 @@ Future(someOperation)
     .map { _ in
         aThirdOperation()
     }.sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  This looks great 🤩, at least to me. And I do feel that these two extensions should be part of **Combine**.
 
@@ -142,7 +142,7 @@ Future(someOperation)
     .zip(Future(someOtherOperation))
     .then(aThirdOperation)
     .sinkPrint()
-print("\n")
+Logger.shared.returnLogs()
 /*:
  This is great but there is a problem with our extension : we might be causing performance issues when applying `then` to a `Publishers.Sequence` because we will be returning a `Publisher.Map<Self, T>` where we should probably be returning `Self`
  */
