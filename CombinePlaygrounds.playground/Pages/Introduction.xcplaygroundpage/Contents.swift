@@ -46,6 +46,7 @@
     - [2. Subscribers.Demand](SubscribersDemand)
     - [3. Back pressure](BackPressure)
     - [4. Buffers](Buffers)
+    - [5. Collect](Collect)
  - IV Annex
     - [1. Native subject crash](NativeSubjectsCrash)
 

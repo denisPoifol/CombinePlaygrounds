@@ -26,6 +26,7 @@
         <page name='SubscribersDemand'/>
         <page name='BackPressure'/>
         <page name='Buffers'/>
+        <page name='Collect'/>
         <page name='NativeSubjectsCrash'/>
     </pages>
 </playground>
