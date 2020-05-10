@@ -41,7 +41,7 @@ let record2 = Record<Int, MyError> { recording in
     recording.receive(4)
     recording.receive(completion: recording.completion)
 }
-record2.sinkPrint()
+record1.sinkPrint()
 record2.sinkPrint()
 Logger.shared.returnLogs()
 /*:
