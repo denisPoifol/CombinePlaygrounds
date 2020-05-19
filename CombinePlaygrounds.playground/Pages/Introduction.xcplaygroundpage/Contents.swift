@@ -47,6 +47,7 @@
     - [3. Back pressure](BackPressure)
     - [4. Buffers](Buffers)
     - [5. Collect](Collect)
+    - [6. Implementing a simple publisher](MyJust)
  - IV Annex
     - [1. Native subject crash](NativeSubjectsCrash)
 

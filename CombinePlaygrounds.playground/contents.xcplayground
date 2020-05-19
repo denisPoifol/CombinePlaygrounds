@@ -27,6 +27,7 @@
         <page name='BackPressure'/>
         <page name='Buffers'/>
         <page name='Collect'/>
+        <page name='MyJust'/>
         <page name='NativeSubjectsCrash'/>
     </pages>
 </playground>
