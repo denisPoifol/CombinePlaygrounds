@@ -137,11 +137,9 @@ subject.send(2)
 /*:
  When testing with a `PassthroughSubject` we cans see that something went wrong here, the `Publishers.Sink` implmentation cancelled when released, and we can see how this is important. Indeed if we do not cancel the subscription upon release then we cannot notify the print operator that we are not listening to event anymore.
 
- To fix that we just need to call `cancel` in our `deinit` method
-
- We can finally complete our `Sink` implementation. Which as far as I know is the same as `Publishers.Sink` at least functionaly.
+ To fix that we just need to call `cancel` in our `deinit` method.
  */
-class MySink<Input, Failure: Error>: Subscriber, Cancellable {
+class MySink3<Input, Failure: Error>: Subscriber, Cancellable {
     private let receiveValue: (Input) -> Void
     private let receiveCompletion: (Subscribers.Completion<Failure>) -> Void
     private var subscription: Subscription?
@@ -175,4 +173,66 @@ class MySink<Input, Failure: Error>: Subscriber, Cancellable {
         subscription?.cancel()
     }
 }
+/*:
+ There is still one major difference between our implementation of `Sink` and the one provided by **Combine**.
+ */
+let mySink = MySink3<Int, Never>()
+Just(1).print().subscribe(mySink)
+Just(2).print().subscribe(mySink)
+Just(3).print().subscribe(mySink)
+Just(4).print().subscribe(mySink)
+/*:
+ Once it has been attached to one publisher, it should not be able to attach to another.
+
+ In order to fix this let's add an internal state to ou implementation.
+*/
+enum SubscriberState {
+    case waitingForASubscription
+    case subscribed(Subscription)
+    case completed
+}
+
+class MySink<Input, Failure: Error>: Subscriber, Cancellable {
+    private let receiveValue: (Input) -> Void
+    private let receiveCompletion: (Subscribers.Completion<Failure>) -> Void
+    private var state = SubscriberState.waitingForASubscription
+
+    init(receiveCompletion: @escaping (Subscribers.Completion<Failure>) -> Void  = { _ in },
+         receiveValue: @escaping (Input) -> Void = { _ in }) {
+        self.receiveValue = receiveValue
+        self.receiveCompletion = receiveCompletion
+    }
+
+    deinit {
+        cancel()
+    }
+
+    func receive(subscription: Subscription) {
+        guard case .waitingForASubscription = state else {
+            // since we are not really subscribing to the publisher here we need to cancel the subscription
+            subscription.cancel()
+            return
+        }
+        state = .subscribed(subscription)
+        subscription.request(.unlimited)
+    }
+
+    func receive(_ input: Input) -> Subscribers.Demand {
+        receiveValue(input)
+        return .none
+    }
+
+    func receive(completion: Subscribers.Completion<Failure>) {
+        state = .completed
+        receiveCompletion(completion)
+    }
+
+    func cancel() {
+        guard case let .subscribed(subscription) = state else { return }
+        subscription.cancel()
+    }
+}
+/*:
+ Our `Sink` implementation is finally complete. Which as far as I know is the same as `Publishers.Sink` at least functionaly.
+ */
 //: [Next](@next)
