@@ -70,7 +70,7 @@ let subject = PassthroughSubject<Int, MyError>()
 let subjectSubscriber1 = RegulatedFlowSubscriber1<Int, MyError>()
 subject
     .print()
-    .subscribe(subjectSubscriber) // Comment me once you tried
+    .subscribe(subjectSubscriber1) // Comment me once you tried
 print("\n")
 /*:
  😱 I did not expected a crash from this. What's causing this !?
