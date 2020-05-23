@@ -48,6 +48,7 @@
     - [4. Buffers](Buffers)
     - [5. Collect](Collect)
     - [6. Implementing a simple publisher](MyJust)
+    - [7. Creating a UIEvent publisher](UIControlPublisher)
  - IV Annex
     - [1. Native subject crash](NativeSubjectsCrash)
 
