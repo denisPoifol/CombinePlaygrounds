@@ -29,6 +29,7 @@
         <page name='Collect'/>
         <page name='MyJust'/>
         <page name='UIControlPublisher'/>
+        <page name='MemoryManagement'/>
         <page name='NativeSubjectsCrash'/>
     </pages>
 </playground>
