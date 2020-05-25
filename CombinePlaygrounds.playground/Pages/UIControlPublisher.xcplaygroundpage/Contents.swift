@@ -136,9 +136,10 @@ extension UIControlPublisher: Publisher {
     }
 }
 /*:
- With this implementation subscription barely have anything to do.
+ With this implementation the subscriptions barely have anything left to do.
  They will keep a reference on the subscriber and keep count of the demand and that's it.
  But since the subscription is not the one doing the work, it needs the publisher to stay alive in order to be fed values.
+ For that reason we are going to add a reference to the publihser in the subscription.
  */
 extension UIControlPublisher {
     final class _Subscritption: Subscription {
@@ -179,5 +180,7 @@ button.sendActions(for: .touchDown)
 button.sendActions(for: .touchUpOutside)
 /*:
  Here we have seen that we can sometimes refactor our publisher and subscriptions so that the publisher manages what is common to each subscribers and subscription what is specific.
+
+ > If we wanted to make our publisher even easier to find for a new comer to the project, we could create our publisher `UIControlPublisher` class in the `Publshers` namespace.
  */
 //: [Next](@next)

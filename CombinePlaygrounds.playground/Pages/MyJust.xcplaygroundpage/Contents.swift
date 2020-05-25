@@ -5,7 +5,7 @@ import Foundation
  We have seen how we can create a custom subscriber, and how it can be valuable if we want to apply back pressure since `Sink` cannot do it for us.
 
  Let's move on to what everybody want to start with, a custom publisher.
- Because we are lazy, and mostly because we do not want to get into something too hard, we are going to start with implementing our own version of `Just`.
+ Because we are lazy, and mostly because we do not want to get into something too hard yet, we are going to start with implementing our own version of `Just`.
 
  ## 6 Implementing a simple publisher
 
@@ -22,7 +22,9 @@ struct MyJust<Output> {
  Okay, to conform to `Publisher` we only need one method:
  `func receive<S>(subscriber: S) where S : Subscriber, Self.Failure == S.Failure, Self.Output == S.Input`
 
- As we can recall from the [life cycle of a publisher](CoreConcepts). Within this method we should give our subscriber a subscription. Unfortunatelly **Combine** does not come with built in subscription so we are going to need to create one in time.
+ As we can recall from the [life cycle of a publisher](CoreConcepts).
+ Within this method we should give our subscriber a subscription.
+ Unfortunatelly for us **Combine** does not come with built in subscriptions so we are going to need to create one.
  But let's start simple and use `StubSubscription<Output>` as a subscription we will replace it once we figured out what we need to do with it.
 
  We also need to define our `Output` and `Failure` types, since `Just` never fails our `Failure` type is going to be `Never` and the `Output` will be a type parameter of our generic struct
@@ -95,7 +97,8 @@ extension MyJust: Publisher {
     }
 }
 /*:
- And that's all for the implementation of `Just`, there is one difference with the implementation provided by **Combine** though.
+ And that's all for the implementation of `Just`.
+ There is one difference with the implementation provided by **Combine** though.
  If we were to send a demand for no values to our implementation it would be ignored, while if we sent it to the actual `Just` implementation our program would crash because there is an assertion for a strictly positive demand instead of only a simple check.
  */
 let just5 = MyJust(5)
