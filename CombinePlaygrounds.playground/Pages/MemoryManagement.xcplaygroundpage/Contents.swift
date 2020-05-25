@@ -96,6 +96,7 @@ import Foundation
  */
 let publisher = PassthroughSubject<Int, Never>()
 publisher.sinkPrint()
+Logger.shared.returnLogs()
 /*:
  - Callout(Your brain):
  Indeed the subscriber is cancelled even though we never bothered to do it.
