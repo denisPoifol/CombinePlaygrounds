@@ -53,14 +53,14 @@ class RegulatedFlowSubscriber1<Input, Failure: Error>: Subscriber, Cancellable {
 
  Let's play a bit with it to understand how it works :
  */
-let intPublisher = (1...).publisher.print()
+let intPublisher = (1...).publisher.print(to: Logger.shared)
 let regulatedFlowSubscriber = RegulatedFlowSubscriber1<Int, Never>()
 intPublisher.subscribe(regulatedFlowSubscriber)
 regulatedFlowSubscriber.request(.max(5))
 regulatedFlowSubscriber.request(.max(3))
 regulatedFlowSubscriber.request(.none)
 regulatedFlowSubscriber.request(.max(1))
-print("\n")
+Logger.shared.returnLogs()
 /*:
  As you can see requesting values is purely additive, you cannot request 5 values then change your mind and request only 3 instead.
 
@@ -69,9 +69,9 @@ print("\n")
 let subject = PassthroughSubject<Int, MyError>()
 let subjectSubscriber1 = RegulatedFlowSubscriber1<Int, MyError>()
 subject
-    .print()
+    .print(to: Logger.shared)
     .subscribe(subjectSubscriber1) // Comment me once you tried
-print("\n")
+Logger.shared.returnLogs()
 /*:
  😱 I did not expected a crash from this. What's causing this !?
 
@@ -119,7 +119,7 @@ class RegulatedFlowSubscriber<Input, Failure: Error>: Subscriber, Cancellable {
 }
 let subjectSubscriber = RegulatedFlowSubscriber<Int, MyError>()
 subject
-    .print()
+    .print(to: Logger.shared)
     .subscribe(subjectSubscriber)
 subject.send(0)
 subjectSubscriber.request(.max(1))
@@ -128,7 +128,7 @@ subject.send(2)
 subject.send(3)
 subjectSubscriber.request(.max(2))
 subject.send(4)
-print("\n")
+Logger.shared.returnLogs()
 /*:
  Here we can see that the behaviour is different than when we were subscribing to `(1...).publisher`.
 

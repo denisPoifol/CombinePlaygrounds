@@ -104,4 +104,5 @@ extension MyJust: Publisher {
 let just5 = MyJust(5)
 just5.sinkPrint()
 just5.sinkPrint()
+Logger.shared.returnLogs()
 //: [Next](@next)

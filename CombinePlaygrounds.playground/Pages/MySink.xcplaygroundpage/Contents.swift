@@ -76,18 +76,20 @@ extension MySink1 {
 extension MySink1: Subscriber {}
 
 func mySink1ComparedWithSink<Output, Failure: Error>(publisher: AnyPublisher<Output, Failure>) {
-    print("MySink")
+    print("MySink", to: &Logger.shared)
     let mySink = MySink1<Output, Failure>()
     publisher.subscribe(mySink)
-    print("")
+    print("", to: &Logger.shared)
 
-    print("Subscribers.Sink")
+    print("Subscribers.Sink", to: &Logger.shared)
     publisher.sink(receiveCompletion: { _ in }, receiveValue: { _ in })
-    print("\n")
+    print("\n", to: &Logger.shared)
 }
 
-mySink1ComparedWithSink(publisher: Just(5).print().eraseToAnyPublisher())
-mySink1ComparedWithSink(publisher: (1...5).publisher.print().eraseToAnyPublisher())
+mySink1ComparedWithSink(publisher: Just(5).print(to: Logger.shared).eraseToAnyPublisher())
+Logger.shared.returnLogs()
+mySink1ComparedWithSink(publisher: (1...5).publisher.print(to: Logger.shared).eraseToAnyPublisher())
+Logger.shared.returnLogs()
 /*:
  We can notice that our implementation prints more lines which are : `request unlimited (synchronous)`
  These line are caused by our returned demand when we receive a value, if we want the same output we should just return `.none` instead of `.unlimited` which will have the exact same effect since we already ask for an unlimited number of values upon subscirption.
@@ -129,11 +131,12 @@ class MySink2<Input, Failure: Error>: Subscriber, Cancellable {
 }
 let subject = PassthroughSubject<Int, Never>()
 autoreleasepool {
-    subject.print().subscribe(MySink2<Int, Never>())
-    _ = subject.print().sink { _ in }
+    subject.print(to: Logger.shared).subscribe(MySink2<Int, Never>())
+    _ = subject.sinkPrint()
     subject.send(1)
 }
 subject.send(2)
+Logger.shared.returnLogs()
 /*:
  When testing with a `PassthroughSubject` we cans see that something went wrong here, the `Publishers.Sink` implmentation cancelled when released, and we can see how this is important. Indeed if we do not cancel the subscription upon release then we cannot notify the print operator that we are not listening to event anymore.
 
@@ -177,10 +180,11 @@ class MySink3<Input, Failure: Error>: Subscriber, Cancellable {
  There is still one major difference between our implementation of `Sink` and the one provided by **Combine**.
  */
 let mySink = MySink3<Int, Never>()
-Just(1).print().subscribe(mySink)
-Just(2).print().subscribe(mySink)
-Just(3).print().subscribe(mySink)
-Just(4).print().subscribe(mySink)
+Just(1).print(to: Logger.shared).subscribe(mySink)
+Just(2).print(to: Logger.shared).subscribe(mySink)
+Just(3).print(to: Logger.shared).subscribe(mySink)
+Just(4).print(to: Logger.shared).subscribe(mySink)
+Logger.shared.returnLogs()
 /*:
  Once it has been attached to one publisher, it should not be able to attach to another.
 

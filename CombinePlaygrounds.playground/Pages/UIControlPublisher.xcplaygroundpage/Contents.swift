@@ -93,6 +93,7 @@ button.sendActions(for: .touchDown)
 button.sendActions(for: .touchCancel)
 allEvents.cancel()
 touchUpInsideOnly.cancel()
+Logger.shared.returnLogs()
 /*:
  Yet there is an imperfection in our implementation, when we register multiple subscriber to our publisher we need to add as many target as subscribers.
  It could be better to balance the work charge between publisher and subscription.
@@ -178,6 +179,7 @@ let sinkPrint = button.publisher(on: .touchDown)
     .sinkPrint()
 button.sendActions(for: .touchDown)
 button.sendActions(for: .touchUpOutside)
+Logger.shared.returnLogs()
 /*:
  Here we have seen that we can sometimes refactor our publisher and subscriptions so that the publisher manages what is common to each subscribers and subscription what is specific.
 
