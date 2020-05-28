@@ -5,7 +5,7 @@ import Foundation
 
  If you tend to pay close attention to memory management there might be something bugging you.
 
- ## 8. Memory management
+ ## 8 Memory management
 
  We have learned that publishers, subscribers and subscription are merely protocols, so the link between them rely on the implementation details.
  But there are some common practice.
