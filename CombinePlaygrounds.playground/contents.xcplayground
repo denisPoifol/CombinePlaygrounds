@@ -30,6 +30,7 @@
         <page name='MyJust'/>
         <page name='UIControlPublisher'/>
         <page name='MemoryManagement'/>
+        <page name='Operator'/>
         <page name='NativeSubjectsCrash'/>
     </pages>
 </playground>
