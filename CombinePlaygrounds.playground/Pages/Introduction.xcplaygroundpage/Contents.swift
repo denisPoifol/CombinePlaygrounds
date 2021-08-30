@@ -41,6 +41,18 @@
     - [15. Managing errors](ManagingErrors)
     - [16. Debuging](Debuging)
     - [17. Holding on to your subscribers](HoldingSubscriber)
+ - III Combine in depth
+    - [1. Implementing Sink](MySink)
+    - [2. Subscribers.Demand](SubscribersDemand)
+    - [3. Back pressure](BackPressure)
+    - [4. Buffers](Buffers)
+    - [5. Collect](Collect)
+    - [6. Implementing a simple publisher](MyJust)
+    - [7. Creating a UIEvent publisher](UIControlPublisher)
+    - [8. Memory management](MemoryManagement)
+    - [9. Implementing an operator](Operator)
+ - IV Annex
+    - [1. Native subject crash](NativeSubjectsCrash)
 
  [Next](@next)
 */

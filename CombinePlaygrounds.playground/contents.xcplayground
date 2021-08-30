@@ -22,5 +22,15 @@
         <page name='ManagingErrors'/>
         <page name='Debuging'/>
         <page name='HoldingSubscriber'/>
+        <page name='MySink'/>
+        <page name='SubscribersDemand'/>
+        <page name='BackPressure'/>
+        <page name='Buffers'/>
+        <page name='Collect'/>
+        <page name='MyJust'/>
+        <page name='UIControlPublisher'/>
+        <page name='MemoryManagement'/>
+        <page name='Operator'/>
+        <page name='NativeSubjectsCrash'/>
     </pages>
 </playground>
